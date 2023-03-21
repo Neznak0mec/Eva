@@ -1,26 +1,33 @@
-﻿
-using System.Net.Sockets;
-using System.Text;
+﻿using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Eva;
 class Program
 {
-        static void Main(string[] args)
-        {
-                // Подключение к серверу
-                TcpClient client = new TcpClient();
-                client.Connect("localhost", 5555);
-                Console.WriteLine("Connected to server");
+    static async Task Main(string[] args)
+    {
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console(theme: AnsiConsoleTheme.Sixteen)
+            .WriteTo.File("ClientLogs.logs")
+            .CreateLogger();
+        Log.Information("Program Started");
+        
+        // Создание и подключение клиента
+        Client client = Client.Instance;
+        client.Connect("localhost", 5555);
+        
 
-                // Получение данных от сервера
-                byte[] data = new byte[2048];
-                NetworkStream stream = client.GetStream();
+        // Вывод сообщений от сервера
+        MessageHandler printer = MessageHandler.Instance;
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-                while (true)
-                {
-                        int bytes = stream.Read(data, 0, data.Length);
-                        string message = Encoding.UTF8.GetString(data, 0, bytes);
-                        Console.WriteLine($"Received random number: {message}");
-                }
-        }
+        // Запуск асинхронного получения сообщений
+        Task receiveTask = client.ReceiveMessagesAsync(printer, cancellationTokenSource.Token);
+
+        Console.ReadLine(); // Ожидание ввода для завершения
+        cancellationTokenSource.Cancel();
+
+        await receiveTask; // Ожидание завершения получения сообщений
+    }
 }
