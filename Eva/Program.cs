@@ -1,5 +1,4 @@
 ﻿using Serilog;
-using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Eva;
@@ -9,21 +8,22 @@ class Program
     {
         Log.Logger = new LoggerConfiguration()
             .WriteTo.Console(theme: AnsiConsoleTheme.Sixteen)
-            .WriteTo.File("ClientLogs.logs")
+            .WriteTo.File($"logs/ClientLogs{DateTime.Now}.txt")
             .CreateLogger();
         Log.Information("Program Started");
         
+        
+        // Вывод сообщений от сервера
+        MessageHandler handler = new MessageHandler();
+        
         // Создание и подключение клиента
-        Client client = Client.Instance;
+        Client client = new Client(handler);
         client.Connect("localhost", 5555);
         
-
-        // Вывод сообщений от сервера
-        MessageHandler printer = MessageHandler.Instance;
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         // Запуск асинхронного получения сообщений
-        Task receiveTask = client.ReceiveMessagesAsync(printer, cancellationTokenSource.Token);
+        Task receiveTask = client.ReceiveMessagesAsync(cancellationTokenSource.Token);
 
         Console.ReadLine(); // Ожидание ввода для завершения
         cancellationTokenSource.Cancel();

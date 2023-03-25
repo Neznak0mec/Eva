@@ -1,11 +1,10 @@
-from threading import Thread
+import json
 
 import vosk
 import pyaudio
 import struct
 import math
 import socket
-import time
 
 model = vosk.Model("model/ru")  # Модель для распознавания русской речи
 rec = vosk.KaldiRecognizer(model, 16000)
@@ -29,7 +28,7 @@ def rms(data):
 
 
 if __name__ == "__main__":
-    global final_res
+    # создание TCP сокета
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(('localhost', 5555))
     server_socket.listen(1)
@@ -47,12 +46,12 @@ if __name__ == "__main__":
         if len(data) == 0:
             break
         if rec.AcceptWaveform(data):
-            text = rec.Result()
-            client_socket.send(text.encode())
+            res = json.loads(rec.Result())['text']
+            if res == "": continue
+            client_socket.send(("result:" + res).encode())
         else:
-            res = rec.PartialResult()
-            if res == prew_res:
-                continue
-            else:
-                prew_res = res
-                client_socket.send(res.encode())
+            res = json.loads(rec.PartialResult())['partial']
+            if res == prew_res or res == "": continue
+            print(res)
+            prew_res = res
+            client_socket.send(("partial:" + res).encode())

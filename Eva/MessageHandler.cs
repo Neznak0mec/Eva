@@ -1,18 +1,15 @@
-using Serilog;
-using Serilog.Events;
-
 namespace Eva;
 
 class MessageHandler
 {
-        private static readonly Lazy<MessageHandler> _instance = new(() => new MessageHandler());
 
-        public static MessageHandler Instance => _instance.Value;
-
-        private MessageHandler() { }
-
-        public void Print(string message)
+        public void Handle(string message)
         {
-            
+                if (message.StartsWith("partial:"))
+                        return;
+
+                message.Replace("result:", "");
+                //todo: парсинг сообщения
+
         }
 }
