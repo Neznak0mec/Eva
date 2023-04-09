@@ -1,3 +1,4 @@
+using Eva.backend.KeyboardSimulators;
 using Serilog;
 using Eva.KeyboardSimulators;
 
@@ -8,7 +9,7 @@ class MessageHandler
         private NaturalLanguageConverter _conventer = new();
         private KeyboardSimulator _simulator = new();
 
-        public void Handle(string message)
+        public async Task Handle(string message)
         {
                 if (message.StartsWith("partial:"))
                         return;

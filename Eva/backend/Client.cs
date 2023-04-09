@@ -24,11 +24,11 @@ class Client
         {
             _tcpClient.Connect(host, port);
             _stream = _tcpClient.GetStream();
-            Log.Information("Connected to server {Host}:{Port}", host, port);
+            Log.Information("client\tConnected to server {Host}:{Port}", host, port);
         }
         catch (Exception e)
         {
-            Log.Error("Failed to connect to the server, exception:\\n{EMessage}", e.Message);
+            Log.Error("client\tFailed to connect to the server, exception:\\n{EMessage}", e.Message);
             throw;
         }
 
@@ -43,13 +43,13 @@ class Client
                 bytes = await _stream.ReadAsync(_data, cancellationToken);
             }
             catch (Exception operationCanceledException) {
-                Log.Information($"Disconnected from server");
+                Log.Information($"client\tDisconnected from server");
                 return;
             }
             
             message = Encoding.UTF8.GetString(_data, 0, bytes);
-            Log.Information("Received message: {Message}", message);
-            _handler.Handle(message);
+            Log.Information("client\tReceived message: {Message}", message);
+            await _handler.Handle(message);
         }   
         
     }

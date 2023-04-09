@@ -1,24 +1,42 @@
 ﻿using Avalonia;
 using Avalonia.ReactiveUI;
-using System;
+
+using System.Globalization;
+
 using Eva;
+
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
+using System.Globalization;
+using Eva.Parsers;
 
 namespace window;
 
 class Program
 {
-    // Initialization code. Don't use any Avalonia, third-party APIs or any
-    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-    // yet and stuff might break.
+
     [STAThread]
     public static async Task Main(string[] args)
     {
-        await BackEnd.Start();
-        BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(args);
+        // подключение логгера
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console(theme: AnsiConsoleTheme.Sixteen)
+            .WriteTo.File($"logs/ClientLogs{DateTime.Now}.txt")
+            .CreateLogger();
+        Log.Information("Program Started");
+
+        Task backEndTask = Task.Run(async () => await new BackEnd().Start()); // запуск BackEnd в отдельном потоке
+
+       Task guiTask = Task.Run(() =>
+        {
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args); // запуск графического окна
+        }); // запуск GUI в отдельном потоке
+
+        await Task.WhenAll(backEndTask,guiTask); // ожидание завершения обоих потоков
     }
 
-    // Avalonia configuration, don't remove; also used by visual designer.
+
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
