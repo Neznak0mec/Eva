@@ -29,7 +29,7 @@ class Client
         catch (Exception e)
         {
             Log.Error("client\tFailed to connect to the server, exception:\\n{EMessage}", e.Message);
-            throw;
+            throw e;
         }
 
     }

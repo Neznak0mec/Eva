@@ -20,7 +20,9 @@ public partial class App : Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) // создание окна в классическом режиме WinForms
         {
-            Task backEndTask = Task.Run(async () => await new BackEnd(window).Start()); // запуск BackEnd в отдельном потоке
+
+            var BackEnd = new BackEnd(window);
+            Task backEndTask = Task.Run(async () => await BackEnd.Start()); // запуск BackEnd в отдельном потоке
 
             desktop.MainWindow = new MainWindow
             {

@@ -22,7 +22,7 @@ class MessageHandler
                 message = message.Replace("result:", "");
                 var resault = _conventer.Convert(message);
                 Log.Information("Converted to: {Resault}",resault);
-                window.ShowLast = "message";
+                window.ShowLast = resault;
                 _simulator.Simulate(resault);
         }
 }

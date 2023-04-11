@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using Serilog;
 
 namespace window.ViewModels;
 
@@ -8,6 +9,7 @@ public class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         ShowLast = "последняя команда";
+        
     }
     private string _lastCommand;
 
