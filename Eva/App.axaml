@@ -13,11 +13,11 @@
 
     <TrayIcon.Icons>
         <TrayIcons>
-            <TrayIcon Icon="/Assets/logo-light.ico" ToolTipText="Avalonia Tray Icon ToolTip">
+            <TrayIcon Icon="/Assets/logo-light.ico" ToolTipText="EVA Tray">
                 <TrayIcon.Menu>
                     <NativeMenu>
                         <NativeMenuItem Header="развернуть" Command="{Binding ExitCommand}"/>
-                        <NativeMenuItem Header="закрыть" Command="{Binding ExitCommand}"/>
+                        <NativeMenuItem Header="закрыть" Command="{Binding CloseWindow}"/>
                     </NativeMenu>
                 </TrayIcon.Menu>
             </TrayIcon>

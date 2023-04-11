@@ -32,4 +32,13 @@ public partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
+
+    public void CloseWindow()
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) // создание окна в классическом режиме WinForms
+        {
+            desktop.MainWindow.Close();
+        }
+        System.Console.WriteLine("хуй");
+    }
 }

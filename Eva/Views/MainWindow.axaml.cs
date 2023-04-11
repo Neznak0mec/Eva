@@ -8,4 +8,10 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    public void CloseWindow()
+    {
+        this.Close();
+        System.Console.WriteLine("хуй");
+    }
 }

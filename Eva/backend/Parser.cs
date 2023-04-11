@@ -2,13 +2,14 @@ using System.Text.RegularExpressions;
 using Eva.Parsers;
 using Newtonsoft.Json;
 using Serilog;
+using window.ViewModels;
 
 namespace Eva;
 
 class NaturalLanguageConverter
 {
     private Dictionary<string, string> templates = new();
-    
+
     NumbersConvertr numberMap = new NumbersConvertr();
     private string currentPattern = "";
 
@@ -17,7 +18,7 @@ class NaturalLanguageConverter
     {
         InitPatterns();
     }
-    
+
     void InitPatterns()
     {
         try
@@ -49,18 +50,19 @@ class NaturalLanguageConverter
     }
 
 
-    public string Convert(string input)
+    public string Convert(string input, MainWindowViewModel window)
     {
 //         поиск команд по паттернам
         foreach (var pattern in templates)
         {
             while (Regex.IsMatch(input, pattern.Key))
             {
+                window.ShowLastCommand = input;
 //                 замена команды на петтерн
                 input = Regex.Replace(input, pattern.Key, pattern.Value);
             }
         }
-        
+
         return numberMap.ConvertRussianNumbersToDigits(input);
     }
 }

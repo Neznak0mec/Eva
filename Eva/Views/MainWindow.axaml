@@ -15,16 +15,15 @@
         Background="#28292e">
 
 
-    <Grid RowDefinitions="auto,auto,*,*,*">
+    <Grid RowDefinitions="auto,auto,*,*,*,*">
         <Border BorderBrush="#b6b7b9"
             Background="#41414b"
             BorderThickness="2"
             CornerRadius="3"
             Padding="4"
             Margin="5">
-            <TextBlock Grid.Row="1" Text="{Binding ShowLast}" TextAlignment="Center" FontSize="15"/>
+            <TextBlock Grid.Row="1" Text="{Binding ShowLastMessage}" TextAlignment="Center" FontSize="15"/>
         </Border>
-        <Button Grid.Row="1" HorizontalAlignment="Center">повторить</Button>
         <Border Grid.Row="2"
             Background="#41414b"
             BorderBrush="#b6b7b9"
@@ -33,7 +32,7 @@
             Padding="4"
             Margin="5">
             <ScrollViewer>
-                <TextBlock Text="команда"  TextAlignment="Center" FontSize="15"/>
+                <TextBlock Text="{Binding ShowLastCommand}"  TextAlignment="Center" FontSize="15"/>
             </ScrollViewer>
         </Border>
         <Border Grid.Row="3"
@@ -44,10 +43,10 @@
             Padding="4"
             Margin="5">
             <ScrollViewer>
-                <TextBlock Text="код" TextAlignment="Center" FontSize="15"/>
+                <TextBlock Text="{Binding ShowLastCode}" TextAlignment="Center" FontSize="15"/>
             </ScrollViewer>
         </Border>
-        <Image Grid.Row="4"
+        <Image Grid.Row="5"
             Width="75"
             Height="75"
             Source="/Assets/logo-light.ico"/>

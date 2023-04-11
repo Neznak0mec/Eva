@@ -20,9 +20,10 @@ class MessageHandler
                         return;
 
                 message = message.Replace("result:", "");
-                var resault = _conventer.Convert(message);
+                var resault = _conventer.Convert(message, window);
                 Log.Information("Converted to: {Resault}",resault);
-                window.ShowLast = resault;
+                window.ShowLastMessage = message;
+                window.ShowLastCode = resault;
                 _simulator.Simulate(resault);
         }
 }
