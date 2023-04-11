@@ -1,6 +1,19 @@
-﻿namespace window.ViewModels;
+﻿using ReactiveUI;
+
+namespace window.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    public string Greeting => "Welcome to Avalonia!";
+
+    public MainWindowViewModel()
+    {
+        ShowLast = "последняя команда";
+    }
+    private string _lastCommand;
+
+    public string ShowLast
+    {
+        get => _lastCommand;
+        set => this.RaiseAndSetIfChanged(ref _lastCommand, value);
+    }
 }

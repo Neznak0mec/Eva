@@ -15,6 +15,7 @@ namespace window;
 class Program
 {
 
+    public static AppBuilder app;
     [STAThread]
     public static async Task Main(string[] args)
     {
@@ -25,15 +26,12 @@ class Program
             .CreateLogger();
         Log.Information("Program Started");
 
-        Task backEndTask = Task.Run(async () => await new BackEnd().Start()); // запуск BackEnd в отдельном потоке
-
-       Task guiTask = Task.Run(() =>
+        Task guiTask = Task.Run(() =>
         {
-            BuildAvaloniaApp()
-                .StartWithClassicDesktopLifetime(args); // запуск графического окна
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args); // запуск графического окна
         }); // запуск GUI в отдельном потоке
 
-        await Task.WhenAll(backEndTask,guiTask); // ожидание завершения обоих потоков
+        await Task.WhenAll(guiTask); // ожидание завершения обоих потоков
     }
 
 
