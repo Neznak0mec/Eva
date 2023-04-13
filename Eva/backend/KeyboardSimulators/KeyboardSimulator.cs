@@ -1,7 +1,5 @@
-using Avalonia.Rendering;
+
 using Desktop.Robot;
-using Desktop.Robot.Extensions;
-using Serilog;
 using TextCopy;
 
 namespace Eva.backend.KeyboardSimulators;
@@ -10,7 +8,7 @@ namespace Eva.backend.KeyboardSimulators;
 public class KeyboardSimulator
 {
     Robot keyboard = new();
-    KeyboardSimulatorWindows.Keyboard buttonMasterWindows = new();
+    KeyboardSimulatorWindows buttonMasterWindows = new();
     private char[] keysarr;
     TextCopy.Clipboard _clipboard = new Clipboard();
 

@@ -1,14 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.ReactiveUI;
-
-using System.Globalization;
-
-using Eva;
-
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
-using System.Globalization;
-using Eva.Parsers;
 
 namespace window;
 
