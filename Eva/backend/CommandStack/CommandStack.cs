@@ -11,21 +11,20 @@ class CommandStack
 
     public static void AddCommand(string command)
     {
-        if(commandStack.Count < Size)
-        {
-            commandStack.Push(command);
-        }
-        else
-        {
-            var tmp = new string[size];
-            commandStack.CopyTo(tmp,0);
-            commandStack.Clear();
-            for(int i = size - 2; i >= 0; i--)
+        if(!command.Contains('✕'))
+            if(commandStack.Count < Size)
+                commandStack.Push(command);
+            else
             {
-                commandStack.Push(tmp[i]);
+                var tmp = new string[size];
+                commandStack.CopyTo(tmp,0);
+                commandStack.Clear();
+                for(int i = size - 2; i >= 0; i--)
+                {
+                    commandStack.Push(tmp[i]);
+                }
+                commandStack.Push(command);
             }
-            commandStack.Push(command);
-        }
     }
 
     public static string RemoveCommand()

@@ -26,7 +26,7 @@ public class KeyboardSimulator
 
     public KeyboardSimulator()
     {
-        keysarr = new []{'ƒ', '⟵', '⟶', '⌃', '⌄', '⟳', '⟲', '⟿','⟰','⟱' } ;
+        keysarr = new []{'ƒ', '⟵', '⟶', '⌃', '⌄', '⟳', '⟲', '⟿', '⟰', '⟱', '✕' } ;
     }
 
     public void Simulate(string input)

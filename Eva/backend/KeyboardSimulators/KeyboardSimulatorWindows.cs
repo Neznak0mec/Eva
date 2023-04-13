@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using WindowsInput;
 using WindowsInput.Native;
+using Eva;
 
 // public class KeyboardSimulatorWindows
 // {
@@ -88,7 +89,7 @@ public class KeyboardSimulatorWindows
 
         public void TypeString(string text)
         {
-            bool needAdd = false, fastPress = false;
+            bool needAdd = false, fastPress = false, cancelLast = false;
             List<VirtualKeyCode> keyGroup = new List<VirtualKeyCode>();
             foreach (char c in text)
             {
@@ -99,6 +100,9 @@ public class KeyboardSimulatorWindows
                         continue;
                     case '⟱':
                         needAdd = true;
+                        continue;
+                    case '✕':
+                        cancelLast = true;
                         continue;
                 }
 
@@ -111,6 +115,12 @@ public class KeyboardSimulatorWindows
                     else if (fastPress)
                     {
                         keyboard.Keyboard.ModifiedKeyStroke(code, keyGroup);
+                    }
+                    else if (cancelLast)
+                    {
+                        string command = CommandStack.RemoveCommand();
+                        for(int i = 0; i < command.Length; i++)
+                            keyboard.Keyboard.KeyPress(VirtualKeyCode.BACK);
                     }
                     else
                     {
