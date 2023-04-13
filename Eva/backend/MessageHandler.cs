@@ -24,6 +24,7 @@ class MessageHandler
                 Log.Information("Converted to: {Resault}",resault);
                 window.ShowLastMessage = message;
                 window.ShowLastCode = resault;
+                CommandStack.AddCommand(resault);
                 _simulator.Simulate(resault);
         }
 }
