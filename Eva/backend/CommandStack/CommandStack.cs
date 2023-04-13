@@ -17,10 +17,10 @@ class CommandStack
         }
         else
         {
-            var tmp = new string[]{};
-            commandStack.CopyTo(tmp, 0);
+            var tmp = new string[size];
+            commandStack.CopyTo(tmp,0);
             commandStack.Clear();
-            for(int i = 1; i < size; i++)
+            for(int i = size - 2; i >= 0; i--)
             {
                 commandStack.Push(tmp[i]);
             }
