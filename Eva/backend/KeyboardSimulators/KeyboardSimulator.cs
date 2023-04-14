@@ -12,21 +12,9 @@ public class KeyboardSimulator
     private char[] keysarr;
     TextCopy.Clipboard _clipboard = new Clipboard();
 
-    private Dictionary<char, Key> _keys = new()
-    {
-        { 'ƒ', Key.Control },
-        { '⟵', Key.Left},
-        { '⟶', Key.Right},
-        { '⌃', Key.PageUp},
-        { '⌄', Key.PageDown},
-        { '⟳', Key.Delete},
-        { '⟲', Key.Backspace},
-        { '⟿',  Key.Shift}
-    };
-
     public KeyboardSimulator()
     {
-        keysarr = new []{'ƒ', '⟵', '⟶', '⌃', '⌄', '⟳', '⟲', '⟿','⟰','⟱' } ;
+        keysarr = new []{'ƒ', '⟵', '⟶', '⌃', '⌄', '⟳', '⟲', '⟿', '⟰', '⟱', '✕' } ;
     }
 
     public void Simulate(string input)
@@ -61,7 +49,6 @@ public class KeyboardSimulator
         var currentclipboard = _clipboard.GetText();
 
         _clipboard.SetText(input);
-
         keyboard.KeyDown(Key.Control);
         keyboard.KeyPress(Key.V);
         keyboard.KeyUp(Key.Control);

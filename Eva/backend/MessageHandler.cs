@@ -17,12 +17,16 @@ class MessageHandler
         public async Task Handle(string message)
         {
                 if (message.StartsWith("partial:"))
+                {
+                        message = message.Replace("partial:", "");
+                        window.ShowLastMessage = message;
                         return;
-
+                }
+                
                 message = message.Replace("result:", "");
                 var resault = _conventer.Convert(message, window);
                 Log.Information("Converted to: {Resault}",resault);
-                window.ShowLastMessage = message;
+                
                 window.ShowLastCode = resault;
                 CommandStack.AddCommand(resault);
                 _simulator.Simulate(resault);

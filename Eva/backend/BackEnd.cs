@@ -24,7 +24,7 @@ class BackEnd
 
         // Создание и подключение клиента
         Client client = new Client(handler);
-        client.Connect("localhost", 5555);
+        await client.Connect("localhost", 5555);
 
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -36,5 +36,4 @@ class BackEnd
 
         await receiveTask; // Ожидание завершения получения сообщений
     }
-
 }

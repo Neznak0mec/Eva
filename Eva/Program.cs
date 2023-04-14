@@ -13,10 +13,25 @@ class Program
     public static async Task Main(string[] args)
     {
         // подключение логгера
-        Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console(theme: AnsiConsoleTheme.Sixteen)
-            .WriteTo.File($"logs/ClientLogs{DateTime.Now}.txt")
-            .CreateLogger();
+        if (OperatingSystem.IsWindows())
+        {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console(theme: AnsiConsoleTheme.Sixteen)
+                .WriteTo.RollingFile(AppDomain.CurrentDomain.BaseDirectory + $"\\logs\\ClientLogs{DateTime.Now}.log")
+                .CreateLogger();
+        }
+        else if (OperatingSystem.IsLinux())
+        {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console(theme: AnsiConsoleTheme.Sixteen)
+                .WriteTo.File($"logs/ClientLogs{DateTime.Now}.log")
+                .CreateLogger();
+        }
+        else
+        {
+            throw new Exception("Unsupported OS");
+        }
+        
         Log.Information("Program Started");
 
         Task guiTask = Task.Run(() =>

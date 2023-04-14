@@ -7,36 +7,28 @@ class CommandStack
     static Stack<string> commandStack = new Stack<string>(){};
     static int size = 15;
 
-    public static int Size { get => size; set => size = value; }
+    public static int Size { get => size;}
 
     public static void AddCommand(string command)
     {
-        if(commandStack.Count < Size)
-        {
-            commandStack.Push(command);
-        }
-        else
-        {
-            var tmp = new string[size];
-            commandStack.CopyTo(tmp,0);
-            commandStack.Clear();
-            for(int i = size - 2; i >= 0; i--)
+        if(!command.Contains('✕'))
+            if(commandStack.Count < Size)
+                commandStack.Push(command);
+            else
             {
-                commandStack.Push(tmp[i]);
+                var tmp = new string[size];
+                commandStack.CopyTo(tmp,0);
+                commandStack.Clear();
+                for(int i = size - 2; i >= 0; i--)
+                {
+                    commandStack.Push(tmp[i]);
+                }
+                commandStack.Push(command);
             }
-            commandStack.Push(command);
-        }
     }
 
     public static string RemoveCommand()
     {
-        if(commandStack.Count > 0)
-        {
-            return commandStack.Pop();
-        }
-        else
-        {
-            return string.Empty;
-        }
+        return commandStack.Count > 0 ? commandStack.Pop() : string.Empty;
     }
 }
