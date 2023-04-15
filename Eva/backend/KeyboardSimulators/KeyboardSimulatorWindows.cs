@@ -1,6 +1,7 @@
 using WindowsInput;
 using WindowsInput.Native;
 using Eva;
+using Serilog;
 
 // public class KeyboardSimulatorWindows
 // {
@@ -91,6 +92,7 @@ public class KeyboardSimulatorWindows
             List<VirtualKeyCode> keyGroup = new List<VirtualKeyCode>();
             foreach (char c in text)
             {
+                Log.Information("current: {c}",c);
                 switch (c)
                 {
                     case '⟰':
@@ -100,25 +102,22 @@ public class KeyboardSimulatorWindows
                         needAdd = true;
                         continue;
                     case '✕':
-                        cancelLast = true;
+                        string command = CommandStack.RemoveCommand();
+                        for(int i = 0; i < command.Length; i++){
+                            keyboard.Keyboard.KeyPress(VirtualKeyCode.BACK);}
                         continue;
                 }
 
                 if (keyCodes.TryGetValue(c, out var code))
                 {
-                    if (needAdd)
-                    {
-                        keyGroup.Add(code);
-                    }
-                    else if (fastPress)
+                    if (fastPress)
                     {
                         keyboard.Keyboard.ModifiedKeyStroke(code, keyGroup);
+
                     }
-                    else if (cancelLast)
+                    else if (needAdd)
                     {
-                        string command = CommandStack.RemoveCommand();
-                        for(int i = 0; i < command.Length; i++)
-                            keyboard.Keyboard.KeyPress(VirtualKeyCode.BACK);
+                        keyGroup.Add(code);
                     }
                     else
                     {

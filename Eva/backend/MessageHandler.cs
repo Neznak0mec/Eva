@@ -14,21 +14,22 @@ class MessageHandler
         {
                 this.window = window;
         }
-        public async Task Handle(string message)
+        public Task Handle(string message)
         {
                 if (message.StartsWith("partial:"))
                 {
                         message = message.Replace("partial:", "");
                         window.ShowLastMessage = message;
-                        return;
+                        return Task.CompletedTask;
                 }
                 
                 message = message.Replace("result:", "");
                 var resault = _conventer.Convert(message, window);
                 Log.Information("Converted to: {Resault}",resault);
-                
-                window.ShowLastCode = resault;
                 _simulator.Simulate(resault);
-                CommandStack.AddCommand(resault);
+                if (!resault.Contains('✕'))
+                        CommandStack.AddCommand(resault);
+                window.ShowLastCode = resault;
+                return Task.CompletedTask;
         }
 }

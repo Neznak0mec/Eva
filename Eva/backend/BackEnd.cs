@@ -1,26 +1,19 @@
-﻿using Avalonia.Controls;
-using Avalonia.Input;
-using Eva.backend.KeyboardSimulators;
-using ReactiveUI;
-using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
-using window;
-using window.ViewModels;
+﻿using window.ViewModels;
 
 namespace Eva;
 
 class BackEnd
 {
-    MainWindowViewModel window;
+    readonly MainWindowViewModel _window;
     public BackEnd(MainWindowViewModel window)
     {
-        this.window = window;
+        this._window = window;
     }
     public async Task Start()
     {
 
         // Обработка сообщений от сервера
-        MessageHandler handler = new MessageHandler(window);
+        MessageHandler handler = new MessageHandler(_window);
 
         // Создание и подключение клиента
         Client client = new Client(handler);
