@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using Serilog;
+using window.Views;
 
 namespace window.ViewModels;
 
@@ -29,10 +30,6 @@ public class MainWindowViewModel : ViewModelBase
     {
         get => _lastCode;
         set => this.RaiseAndSetIfChanged(ref _lastCode, value);
-    }
-    public void CloseWindow()
-    {
-        System.Console.WriteLine("хуй");
     }
 
 }

@@ -39,6 +39,5 @@ public partial class App : Application
         {
             desktop.MainWindow.Close();
         }
-        System.Console.WriteLine("хуй");
     }
 }

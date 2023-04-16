@@ -17,7 +17,7 @@ class Program
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console(theme: AnsiConsoleTheme.Sixteen)
-                .WriteTo.RollingFile(AppDomain.CurrentDomain.BaseDirectory + $"\\logs\\ClientLogs{DateTime.Now}.log")
+                .WriteTo.RollingFile(AppDomain.CurrentDomain.BaseDirectory + "\\logs\\ClientLogs-{Date}.log")
                 .CreateLogger();
         }
         else if (OperatingSystem.IsLinux())

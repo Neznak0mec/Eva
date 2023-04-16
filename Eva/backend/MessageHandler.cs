@@ -25,7 +25,7 @@ class MessageHandler
                 
                 message = message.Replace("result:", "");
                 var resault = _conventer.Convert(message, window);
-                Log.Information("Converted to: {Resault}",resault);
+                Log.Information("handler\tConverted to: {Resault}",resault);
                 _simulator.Simulate(resault);
                 if (!resault.Contains('✕'))
                         CommandStack.AddCommand(resault);

@@ -62,7 +62,6 @@ class NaturalLanguageConverter
                 input = Regex.Replace(input, pattern.Key, pattern.Value);
             }
         }
-        Log.Information("parser\t{input}", input);
         return numberMap.ConvertRussianNumbersToDigits(input);
     }
 }
