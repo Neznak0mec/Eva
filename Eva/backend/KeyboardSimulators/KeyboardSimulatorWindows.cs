@@ -20,7 +20,8 @@ public class KeyboardSimulatorWindows
         { '⟲', VirtualKeyCode.BACK },
         { '⟿', VirtualKeyCode.SHIFT },
         { '«', VirtualKeyCode.HOME},
-        { '»', VirtualKeyCode.END}
+        { '»', VirtualKeyCode.END},
+        { '⊳', VirtualKeyCode.F5}
     };
 
     public void TypeString(string text)
@@ -41,8 +42,6 @@ public class KeyboardSimulatorWindows
                 case '✕':
                     string command = CommandStack.RemoveCommand();
                     keyboard.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_Z);
-//                    for(int i = 0; i < command.Length; i++){
-//                        keyboard.Keyboard.KeyPress(VirtualKeyCode.BACK);}
                     continue;
             }
 

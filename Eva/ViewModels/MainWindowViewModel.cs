@@ -9,8 +9,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        ShowLastCommand = "последняя распознаная команда";
-        ShowLastMessage = "привет, ГОВОРИ -_-";
+        ShowLastCommand = "привет, ГОВОРИ -_-";
+        ShowLastMessage = "последняя распознаная команда";
         ShowLastCode = "последний распознаный код";
     }
     private string _lastCommand;
@@ -30,6 +30,9 @@ public class MainWindowViewModel : ViewModelBase
     {
         get => _lastCode;
         set => this.RaiseAndSetIfChanged(ref _lastCode, value);
+    }
+    public void CloseWindow()
+    {
     }
 
 }

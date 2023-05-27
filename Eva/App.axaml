@@ -16,8 +16,8 @@
             <TrayIcon Icon="/Assets/logo-light.ico" ToolTipText="EVA Tray">
                 <TrayIcon.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="развернуть" />
-                        <NativeMenuItem Header="закрыть" />
+                        <NativeMenuItem Header="развернуть" Click="Show_OnClick"/>
+                        <NativeMenuItem Header="закрыть" Click="Close_OnClick"/>
                     </NativeMenu>
                 </TrayIcon.Menu>
             </TrayIcon>

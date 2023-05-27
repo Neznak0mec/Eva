@@ -40,7 +40,7 @@ class Client
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка: {ex.Message}");
+            Log.Error($"client\tError: {ex.Message}");
         }
         finally
         {
@@ -59,7 +59,7 @@ class Client
                 bytes = await _stream.ReadAsync(_data, cancellationToken);
             }
             catch (Exception operationCanceledException) {
-                Log.Information($"client\tDisconnected from server");
+                Log.Warning($"client\tDisconnected from server");
                 return;
             }
             

@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using window.ViewModels;
@@ -9,9 +10,11 @@ namespace window;
 
 public partial class App : Application
 {
+    Window mainWindow;
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        
     }
 
     public override void OnFrameworkInitializationCompleted()
@@ -24,20 +27,36 @@ public partial class App : Application
             var BackEnd = new BackEnd(window);
             Task backEndTask = Task.Run(async () => await BackEnd.Start()); // запуск BackEnd в отдельном потоке
 
+            mainWindow = desktop.MainWindow;
+            
             desktop.MainWindow = new MainWindow
             {
                 DataContext = window,
             };
+
+            desktop.MainWindow.Closing += (sender, e) =>
+            {
+                e.Cancel = true;
+                desktop.MainWindow.Hide();
+            };
+            
         }
 
         base.OnFrameworkInitializationCompleted();
     }
 
-    public void CloseWindow()
+    private void Show_OnClick(object? sender, EventArgs e)
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) // создание окна в классическом режиме WinForms
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow.Close();
+            desktop.MainWindow.Show();
+            desktop.MainWindow.Activate();
         }
+    }
+
+    private void Close_OnClick(object? sender, EventArgs e)
+    {
+       if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+           desktop.Shutdown();
     }
 }
